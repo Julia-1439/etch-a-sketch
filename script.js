@@ -1,4 +1,10 @@
 generateNewGrid();
+function clearGrid() {
+    document.querySelectorAll(".row, .cell").forEach((elem) => {
+        elem.parentNode.removeChild(elem)
+    });
+}
+
 function generateNewGrid() {
     let cellsPerSide = 16; // Temporary value. Will replace with user input
     
@@ -19,3 +25,4 @@ function generateNewGrid() {
         grid.appendChild(row);
     }
 }
+
