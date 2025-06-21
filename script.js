@@ -1,7 +1,8 @@
 const masterButton = document.querySelector("#generate");
 masterButton.addEventListener("click", (e) => {
     clearGrid();
-    generateNewGrid();
+    const cellsPerSide = promptGridSize();
+    generateNewGrid(cellsPerSide);
 });
 
 function clearGrid() {
@@ -10,9 +11,18 @@ function clearGrid() {
     });
 }
 
-function generateNewGrid() {
-    const cellsPerSide = +prompt();
-    
+function promptGridSize() {
+    while (true) {
+        let cellsPerSide = +prompt("Let's make a sketch!\nHow many squares per side would you like?");
+        if (cellsPerSide > 100 || !cellsPerSide) {
+            alert("Grid size must be at most 100×100. Please try again.");
+            continue;
+        }
+        return cellsPerSide;
+    }
+}
+
+function generateNewGrid(cellsPerSide) {
     const grid = document.querySelector("#grid");
     for (let r = 0; r < cellsPerSide; r++) {
         const row = document.createElement("div");
