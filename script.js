@@ -8,7 +8,12 @@ function generateNewGrid() {
         row.classList.add("row");
         for (let c = 0; c < cellsPerSide; c++) {
                 const cell = document.createElement("div");
+                
                 cell.classList.add("cell");
+                cell.addEventListener("mouseover", (e) => {
+                    e.target.classList.add("filled");
+                })
+                
                 row.appendChild(cell);
         }
         grid.appendChild(row);
