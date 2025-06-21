@@ -1,4 +1,9 @@
-generateNewGrid();
+const masterButton = document.querySelector("#generate");
+masterButton.addEventListener("click", (e) => {
+    clearGrid();
+    generateNewGrid();
+});
+
 function clearGrid() {
     document.querySelectorAll(".row, .cell").forEach((elem) => {
         elem.parentNode.removeChild(elem)
@@ -6,7 +11,7 @@ function clearGrid() {
 }
 
 function generateNewGrid() {
-    let cellsPerSide = 16; // Temporary value. Will replace with user input
+    const cellsPerSide = +prompt();
     
     const grid = document.querySelector("#grid");
     for (let r = 0; r < cellsPerSide; r++) {
