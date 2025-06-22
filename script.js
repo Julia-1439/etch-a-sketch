@@ -31,9 +31,7 @@ function generateNewGrid(cellsPerSide) {
                 const cell = document.createElement("div");
                 
                 cell.classList.add("cell");
-                cell.addEventListener("mouseover", (e) => {
-                    e.target.classList.add("filled");
-                })
+                cell.addEventListener("mouseover", darkenCell);
                 
                 row.appendChild(cell);
         }
@@ -41,3 +39,8 @@ function generateNewGrid(cellsPerSide) {
     }
 }
 
+function darkenCell(e) {
+    const cell = e.target;
+    cell.classList.add("filled");
+    cell.style["opacity"] = Math.min(+getComputedStyle(cell).opacity + 0.10, 1.0);
+}
