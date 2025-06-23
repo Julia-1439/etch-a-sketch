@@ -1,5 +1,3 @@
-const ALPHA_CHANNEL_IDX = 3;
-
 const masterButton = document.querySelector("#generate");
 masterButton.addEventListener("click", (e) => {
     clearGrid();
@@ -31,9 +29,15 @@ function generateNewGrid(cellsPerSide) {
         row.classList.add("row");
         for (let c = 0; c < cellsPerSide; c++) {
                 const cell = document.createElement("div");
-                
                 cell.classList.add("cell");
-                cell.addEventListener("mouseover", darkenCell);
+
+                cell.addEventListener("mouseover", (e) => {
+                    const cell = e.target;
+                    if (!cell.classList.contains("filled")) {
+                        assignRandomColor(cell);
+                    }
+                    darkenCell(cell);
+                });
                 
                 row.appendChild(cell);
         }
@@ -41,22 +45,41 @@ function generateNewGrid(cellsPerSide) {
     }
 }
 
-function darkenCell(e) {
-    const cell = e.target;
+function assignRandomColor(cell) {
+    const [randR, randG, randB] = 
+        Array.from({length: 3}, () => Math.floor(Math.random() * 256));
+    cell.style["background-color"] = `rgba(${randR} ${randG} ${randB} / 0.0)`
     cell.classList.add("filled");
+}
 
-    // Extract the background opacity from a style rule of the form
-    // "rgba(0, 0, 0, <bg-opacity>)" in order to increase it, darkening the cell
-    const currBgOpacity = +getComputedStyle(cell)["background-color"]
-        .replace(")", "").split(",").at(ALPHA_CHANNEL_IDX);
-    
-    // currBgOpacity would be 'undefined' once the alpha channel hits 1 since
-    // the rgba string returned will omit the alpha channel. In this case, do
-    // nothing to the cell.
-    if (currBgOpacity == null) {
+/**
+ * 
+ * @param {string} rgbaStr a string of the form "rgba(r, g, b, alpha)" or
+ * "rgb(r, g, b)"
+ * @returns array containing the r, g, b, alpha values
+ */
+function rgbaExtractHelper(rgbaStr) {
+    const undesiredStrs = ["rgb", "a", "(", ")", " "];
+    for (const s of undesiredStrs) {
+        rgbaStr = rgbaStr.replace(s, "");
+    }
+    const [r, g, b, a] = rgbaStr.split(",").map(Number);
+    return [r, g, b, a]
+}
+
+function darkenCell(cell) {
+    const bgColor = getComputedStyle(cell)["background-color"];
+    const [r, g, b, currAlpha] = rgbaExtractHelper(bgColor);
+
+    // Alpha value would become 'undefined' once the alpha channel hits 1 since
+    // bgColor will omit the alpha channel. In this case, do not darken the 
+    // cell. 
+    if (currAlpha == null) {
         return;
     }
     
-    const newBgOpacity = Math.min(currBgOpacity + 0.10, 1.0);
-    cell.style["background-color"] = `rgba(0 0 0 / ${newBgOpacity})`
+    // The new alpha value is explicitly capped at 1.0 with Math.min() for 
+    // safety. 
+    const newAlpha = Math.min(currAlpha + 0.10, 1.0);
+    cell.style["background-color"] = `rgba(${r} ${g} ${b} / ${newAlpha})`
 }
