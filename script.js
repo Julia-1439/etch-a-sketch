@@ -1,3 +1,5 @@
+const ALPHA_CHANNEL_IDX = 3;
+
 const masterButton = document.querySelector("#generate");
 masterButton.addEventListener("click", (e) => {
     clearGrid();
@@ -42,5 +44,19 @@ function generateNewGrid(cellsPerSide) {
 function darkenCell(e) {
     const cell = e.target;
     cell.classList.add("filled");
-    cell.style["opacity"] = Math.min(+getComputedStyle(cell).opacity + 0.10, 1.0);
+
+    // Extract the background opacity from a style rule of the form
+    // "rgba(0, 0, 0, <bg-opacity>)" in order to increase it, darkening the cell
+    const currBgOpacity = +getComputedStyle(cell)["background-color"]
+        .replace(")", "").split(",").at(ALPHA_CHANNEL_IDX);
+    
+    // currBgOpacity would be 'undefined' once the alpha channel hits 1 since
+    // the rgba string returned will omit the alpha channel. In this case, do
+    // nothing to the cell.
+    if (currBgOpacity == null) {
+        return;
+    }
+    
+    const newBgOpacity = Math.min(currBgOpacity + 0.10, 1.0);
+    cell.style["background-color"] = `rgba(0 0 0 / ${newBgOpacity})`
 }
