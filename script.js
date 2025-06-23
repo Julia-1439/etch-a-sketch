@@ -1,20 +1,20 @@
 const masterButton = document.querySelector("#generate");
 masterButton.addEventListener("click", (e) => {
-    clearGrid();
     while (true) {
         const userInputForNewGrid = prompt("Let's make a sketch!\nHow many squares per side would you like?");
-
-        // Check for escape key pressed or cancel button clicked
+        
+        // Check for escape key / cancel button / refresh button pressed
         if (userInputForNewGrid == null) {
             break;
         }
         // If an input is provided, ensure it is a number between 0 and 100
         if(isNaN(+userInputForNewGrid) || +userInputForNewGrid <= 0 
-            || +userInputForNewGrid > 100) {
+        || +userInputForNewGrid > 100) {
             alert("Grid size must be at most 100×100. Please try again.");
             continue;
         }
         
+        clearGrid();
         const cellsPerSide = +userInputForNewGrid;
         generateNewGrid(cellsPerSide);
         break;
