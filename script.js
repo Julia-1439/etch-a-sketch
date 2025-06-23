@@ -1,25 +1,30 @@
 const masterButton = document.querySelector("#generate");
 masterButton.addEventListener("click", (e) => {
     clearGrid();
-    const cellsPerSide = promptGridSize();
-    generateNewGrid(cellsPerSide);
+    while (true) {
+        const userInputForNewGrid = prompt("Let's make a sketch!\nHow many squares per side would you like?");
+
+        // Check for escape key pressed or cancel button clicked
+        if (userInputForNewGrid == null) {
+            break;
+        }
+        // If an input is provided, ensure it is a number between 0 and 100
+        if(isNaN(+userInputForNewGrid) || +userInputForNewGrid <= 0 
+            || +userInputForNewGrid > 100) {
+            alert("Grid size must be at most 100×100. Please try again.");
+            continue;
+        }
+        
+        const cellsPerSide = +userInputForNewGrid;
+        generateNewGrid(cellsPerSide);
+        break;
+    }
 });
 
 function clearGrid() {
     document.querySelectorAll(".row, .cell").forEach((elem) => {
         elem.parentNode.removeChild(elem)
     });
-}
-
-function promptGridSize() {
-    while (true) {
-        let cellsPerSide = +prompt("Let's make a sketch!\nHow many squares per side would you like?");
-        if (cellsPerSide > 100 || !cellsPerSide) {
-            alert("Grid size must be at most 100×100. Please try again.");
-            continue;
-        }
-        return cellsPerSide;
-    }
 }
 
 function generateNewGrid(cellsPerSide) {
