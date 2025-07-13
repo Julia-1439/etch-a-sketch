@@ -13,7 +13,5 @@
 }
 
 .cell {
-    box-sizing: border-box;
-    border: none;
     flex: 1; 
 }
