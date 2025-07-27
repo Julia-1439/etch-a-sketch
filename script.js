@@ -86,15 +86,13 @@ function darkenCell(cell) {
     const bgColor = getComputedStyle(cell)["background-color"];
     const [r, g, b, currAlpha] = rgbaExtractHelper(bgColor);
 
-    // Alpha value would become 'undefined' once the alpha channel hits 1 since
-    // bgColor will omit the alpha channel. In this case, do not darken the 
-    // cell. 
+    // Alpha value would become 'undefined' once the alpha channel hits or
+    // exceeds 1.0 since bgColor will omit the alpha channel. In this case, do 
+    // not attempt to darken the cell. 
     if (currAlpha == null) {
         return;
     }
     
-    // The new alpha value is explicitly capped at 1.0 with Math.min() for 
-    // safety. 
-    const newAlpha = Math.min(currAlpha + 0.10, 1.0);
+    const newAlpha = currAlpha + 0.10;
     cell.style["background-color"] = `rgba(${r} ${g} ${b} / ${newAlpha})`
 }
