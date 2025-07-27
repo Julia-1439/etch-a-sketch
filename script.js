@@ -32,7 +32,7 @@ function handleMasterBtnClick() {
 
 function handleGridMouseover(evt) {
     const target = evt.target; 
-    if (target.id === "grid" || target.classList.contains("row")) {
+    if (!target.classList.contains("cell")) {
         return;
     }
 
