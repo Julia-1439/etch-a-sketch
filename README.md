@@ -16,4 +16,4 @@ first mouse-over, and the darkening gradient had to retain that assigned color.)
 
 DevTools was very valuable in debugging: I set breakpoints, tracked values of variables, set nodes as global variables, and viewed computed styles. Regarding version control, considering how many features were in this project counting the extra credit features, using branches proved to be valuable. 
 
-All in all, this project took me about 11 hours to relearn the concepts needed, implement a solution, and implement the extra credit features. About 1 hour to clean up, optimize, and request feedback. I'm also quite proud of my modular commit history in this one :)
+All in all, this project took me about 11 hours to relearn the concepts needed, implement a solution, and implement the extra credit features. About 2 hours to clean up, optimize, and request feedback. I'm also quite proud of my modular commit history in this one :)
