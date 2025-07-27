@@ -43,6 +43,8 @@ function handleGridMouseover(evt) {
     darkenCell(cell);
 }
 
+/* Helper functions used in the event handlers ============================== */
+
 function clearGrid() {
     document.querySelectorAll(".row, .cell").forEach((elem) => {
         elem.parentNode.removeChild(elem)
@@ -63,6 +65,11 @@ function generateNewGrid(cellsPerSide) {
     }
 }
 
+/**
+ * Assigns a random color to a cell and marks it as 'filled'. The marker is 
+ * used in handleGridMouseover() to assign a random color on *only the first* 
+ * mouseover.  
+ */
 function assignRandomColor(cell) {
     const [randR, randG, randB] = 
         Array.from({length: 3}, () => Math.floor(Math.random() * 256));
@@ -72,9 +79,9 @@ function assignRandomColor(cell) {
 
 /**
  * 
- * @param {string} rgbaStr a string of the form "rgba(r, g, b, alpha)" or
+ * @param rgbaStr is a string of the form "rgba(r, g, b, alpha)" or
  * "rgb(r, g, b)"
- * @returns array containing the r, g, b, alpha values
+ * @returns disaggregates the string into an array containing the rgba values
  */
 function rgbaExtractHelper(rgbaStr) {
     const undesiredStrs = ["rgb", "a", "(", ")", " "];
