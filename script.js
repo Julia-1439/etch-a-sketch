@@ -93,6 +93,6 @@ function darkenCell(cell) {
         return;
     }
     
-    const newAlpha = currAlpha + 0.10;
+    const newAlpha = currAlpha + 0.20;
     cell.style["background-color"] = `rgba(${r} ${g} ${b} / ${newAlpha})`
 }
