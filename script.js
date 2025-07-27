@@ -1,3 +1,7 @@
+/* Add event listeners to grid and master button */
+const grid = document.querySelector("#grid");
+grid.addEventListener("mouseover", handleGridMouseover);
+
 const masterButton = document.querySelector("#generate");
 masterButton.addEventListener("click", (e) => {
     while (true) {
@@ -21,6 +25,21 @@ masterButton.addEventListener("click", (e) => {
     }
 });
 
+/* Event handlers */
+
+function handleGridMouseover(evt) {
+    const target = evt.target; 
+    if (target.id === "grid" || target.classList.contains("row")) {
+        return;
+    }
+
+    const cell = target;
+    if (!cell.classList.contains("filled")) {
+        assignRandomColor(cell);
+    }
+    darkenCell(cell);
+}
+
 function clearGrid() {
     document.querySelectorAll(".row, .cell").forEach((elem) => {
         elem.parentNode.removeChild(elem)
@@ -35,15 +54,6 @@ function generateNewGrid(cellsPerSide) {
         for (let c = 0; c < cellsPerSide; c++) {
                 const cell = document.createElement("div");
                 cell.classList.add("cell");
-
-                cell.addEventListener("mouseover", (e) => {
-                    const cell = e.target;
-                    if (!cell.classList.contains("filled")) {
-                        assignRandomColor(cell);
-                    }
-                    darkenCell(cell);
-                });
-                
                 row.appendChild(cell);
         }
         grid.appendChild(row);
