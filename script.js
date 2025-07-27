@@ -1,12 +1,17 @@
-/* Add event listeners to grid and master button */
+/* Add event listeners to page elements ===================================== */
+const masterButton = document.querySelector("#generate");
+masterButton.addEventListener("click", handleMasterBtnClick);
+
 const grid = document.querySelector("#grid");
 grid.addEventListener("mouseover", handleGridMouseover);
 
-const masterButton = document.querySelector("#generate");
-masterButton.addEventListener("click", (e) => {
+/* Event handlers =========================================================== */
+
+function handleMasterBtnClick() {
     while (true) {
         const userInputForNewGrid = prompt("Let's make a sketch!\nHow many squares per side would you like?");
         
+        /* Input validation */
         // Check for escape key / cancel button / refresh button pressed
         if (userInputForNewGrid == null) {
             break;
@@ -23,9 +28,7 @@ masterButton.addEventListener("click", (e) => {
         generateNewGrid(cellsPerSide);
         break;
     }
-});
-
-/* Event handlers */
+}
 
 function handleGridMouseover(evt) {
     const target = evt.target; 
